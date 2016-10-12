@@ -24,6 +24,7 @@ gem 'carrierwave', github:'carrierwaveuploader/carrierwave'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem "fog-aws"
 gem "figaro"
+gem "mini_magick"
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
