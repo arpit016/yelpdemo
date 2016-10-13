@@ -7,7 +7,7 @@
     </h2>
     
     <div class="star-rating" data-score = <%= @avg_rating %> ></div>
-    <p><%= "#{@reviews.length} reviews" %></p>
+    <p><%= "#{@reviews_length.length} reviews" %></p>
     
     <input type="hidden" id="refresh" value="no">
     
@@ -75,6 +75,9 @@
         </tbody>
       </table>
     <% end %>
+    <div class="pagination pagination-sm">
+      <%= will_paginate @reviews %>
+    </div>
    
   </div>
 </div>

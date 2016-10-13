@@ -8,7 +8,7 @@ class RestaurantsController < ApplicationController
   
   def search
     if params[:search].present?
-      @restaurants = Restaurant.search(params[:search])
+      @restaurants = Restaurant.search(params[:search]) 
     else
       @restaurants = Restaurant.all
     end
@@ -16,18 +16,19 @@ class RestaurantsController < ApplicationController
   
   
   def index
-    @restaurants = Restaurant.all
+    @restaurants = Restaurant.paginate(page: params[:page], per_page: 2)
   end
 
   # GET /restaurants/1
   # GET /restaurants/1.json
   def show
-    @reviews = Review.where(restaurant_id: @restaurant.id).order("created_at DESC")
+    @reviews = Review.where(restaurant_id: @restaurant.id).order("created_at DESC").paginate(page: params[:page], per_page: 1)
+    @reviews_length = Review.where(restaurant_id: @restaurant.id).order("created_at DESC")
     @review_writer = Review.where({restaurant_id: @restaurant.id, user_id: current_user.id})
-    if @reviews.blank?
+    if @reviews_length.blank?
       @avg_rating = 0
     else
-      @avg_rating = @reviews.average(:rating).round(2)
+      @avg_rating = @reviews_length.average(:rating).round(2)
     end
   end
 
