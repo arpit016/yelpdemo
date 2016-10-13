@@ -9,6 +9,8 @@
     <div class="star-rating" data-score = <%= @avg_rating %> ></div>
     <p><%= "#{@reviews.length} reviews" %></p>
     
+    <input type="hidden" id="refresh" value="no">
+    
     <p>
       <strong>Address:</strong>
       <%= @restaurant.address %>
@@ -75,6 +77,11 @@
 <% end %>
 <%= link_to 'Back', restaurants_path, class: "btn btn-link" %>
 <script>
+ $(document).ready(function(e) {
+    var $input = $('#refresh');
+
+    $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+});
   $('.star-rating').raty({
     path: 'https://s3.ap-south-1.amazonaws.com/yelpdemoarpit/stars',
     readOnly: true,
