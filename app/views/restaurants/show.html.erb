@@ -20,7 +20,7 @@
       <strong>Phone:</strong>
       <%= @restaurant.phone %>
     </p>
-    
+    <!-- AIzaSyAjmMq-TCHkoQ3Y3lIqobyaoBqiyUxX3hY -->
     <p>
       <strong>Website:</strong>
       <%= link_to @restaurant.website, @restaurant.website, class: "btn btn-link" %>
@@ -28,6 +28,15 @@
     <% if @review_writer.blank? %>
       <%= link_to 'Write A Review', new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
     <% end %>
+    <br />
+    <iframe
+      width = "230"
+      height = "230"
+      frameborder = "0" style= "border:0"
+      src="//www.google.com/maps/embed/v1/place?q=<%= @restaurant.address.parameterize %>
+      &zoom=17
+      &key=AIzaSyAjmMq-TCHkoQ3Y3lIqobyaoBqiyUxX3hY">
+    </iframe>
   </div>
   
   <div class="col-md-9">
