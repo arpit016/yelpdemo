@@ -23,8 +23,9 @@
       <strong>Website:</strong>
       <%= link_to @restaurant.website, @restaurant.website, class: "btn btn-link" %>
     </p>
-    
-    <%= link_to 'Write A Review', new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
+    <% if @review_writer.blank? %>
+      <%= link_to 'Write A Review', new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
+    <% end %>
   </div>
   
   <div class="col-md-9">
@@ -50,6 +51,13 @@
             <td>
               <div class="star-rating" data-score = <%= review.rating %> ></div>                              <!-- <p><#%= review.rating %></p> -->
               <p><%= h(review.comment).gsub(/\n/, '<br/>').html_safe %></p>
+              
+              <% if user_signed_in? %>
+                <% if (review.user == current_user) || (current_user.admin?) %>
+                  <%= link_to "Edit", edit_restaurant_review_path(@restaurant, review) %>
+                  <%= link_to "Delete", restaurant_review_path(@restaurant, review), method: :delete %>
+                <% end %>
+              <% end %>
             </td>
           </tr>
            <% end %>
@@ -62,8 +70,9 @@
 
 
 
-
-<%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-link" %> |
+<% if user_signed_in? && current_user.admin? %>
+  <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-link" %> |
+<% end %>
 <%= link_to 'Back', restaurants_path, class: "btn btn-link" %>
 <script>
   $('.star-rating').raty({
